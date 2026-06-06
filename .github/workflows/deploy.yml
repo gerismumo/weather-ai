@@ -19,7 +19,6 @@ jobs:
       - name: Build and run containers
         run: |
           set -a
-          source /home/apps/weather/.env
           source /home/apps/weather/web/.env
           set +a
           docker-compose -f docker-compose.prod.yml down --remove-orphans
