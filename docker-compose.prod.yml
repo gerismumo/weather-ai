@@ -1,0 +1,38 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: apps/api/Dockerfile
+    container_name: weather_ai_api
+    ports:
+      - '3027:3000'
+    restart: always
+    env_file:
+      - /home/apps/weather/api/.env
+    networks:
+      - app-network
+
+  web:
+    build:
+      context: .
+      dockerfile: apps/web/Dockerfile
+      args:
+        NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL}
+    container_name: weather_ai_web
+    restart: always
+    env_file:
+      - /home/apps/weather/web/.env
+    environment:
+      - NODE_ENV=production
+      - PORT=3001
+      - HOSTNAME=0.0.0.0
+    depends_on:
+      - api
+    ports:
+      - '3028:3001'
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    external: true
