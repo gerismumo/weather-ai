@@ -13,9 +13,11 @@ import { apiHandler } from "./handler.service"
 export const searchWeatherByDestination = async (
   params: WeatherSearchParams,
 ) => {
-  return apiHandler<IWeatherSearchResult>(
+  const result = await apiHandler<IWeatherSearchResult>(
     ClientHttp.get("/weather/search", { params }),
   )
+
+  return result;
 }
 
 /**

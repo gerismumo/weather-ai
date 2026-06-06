@@ -1,3 +1,5 @@
+import WeatherPage from "@/components/weather/WeatherPage";
+
 export default async function Home() {
-  return <div className="">home page</div>;
+  return <WeatherPage/>
 }
