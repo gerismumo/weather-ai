@@ -15,9 +15,11 @@
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\""
   },
   "dependencies": {
+    "@nestjs/axios": "^4.0.1",
     "@nestjs/common": "^11.1.11",
     "@nestjs/core": "^11.1.11",
     "@nestjs/platform-express": "^11.1.11",
+    "axios": "^1.17.0",
     "body-parser": "^2.2.2",
     "dotenv": "^17.4.2",
     "escape-html": "^1.0.3",
