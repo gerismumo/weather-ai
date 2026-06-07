@@ -1,0 +1,270 @@
+{
+  "info": {
+    "name": "WeatherAI Travel API",
+    "description": "Postman collection for the NestJS weather travel search API.\n\nSet the `base_url` variable to your server (default: http://localhost:3000/api/v1).",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:3000/api",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Weather",
+      "item": [
+        {
+          "name": "Search by Destination (week — default)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/weather/search?destination=Nairobi&period=week&units=metric&lang=en&ai=true",
+              "host": ["{{base_url}}"],
+              "path": ["weather", "search"],
+              "query": [
+                { "key": "destination", "value": "Nairobi", "description": "City or place name" },
+                { "key": "period", "value": "week", "description": "day | week | month | year" },
+                { "key": "units", "value": "metric", "description": "metric | imperial" },
+                { "key": "lang", "value": "en", "description": "2-char language code" },
+                { "key": "ai", "value": "true", "description": "Include AI summary (true | false)" }
+              ]
+            },
+            "description": "Search weather for a destination for the current week."
+          },
+          "response": []
+        },
+        {
+          "name": "Search — Day view",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/weather/search?destination=Paris%2C%20France&period=day&units=metric",
+              "host": ["{{base_url}}"],
+              "path": ["weather", "search"],
+              "query": [
+                { "key": "destination", "value": "Paris, France" },
+                { "key": "period", "value": "day" },
+                { "key": "units", "value": "metric" }
+              ]
+            },
+            "description": "Today-only forecast for Paris."
+          },
+          "response": []
+        },
+        {
+          "name": "Search — Month view (14 days, Pro+)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/weather/search?destination=Tokyo&period=month&units=metric&ai=false",
+              "host": ["{{base_url}}"],
+              "path": ["weather", "search"],
+              "query": [
+                { "key": "destination", "value": "Tokyo" },
+                { "key": "period", "value": "month" },
+                { "key": "units", "value": "metric" },
+                { "key": "ai", "value": "false", "description": "Skip AI summary to preserve quota" }
+              ]
+            },
+            "description": "14-day forecast. Requires Pro or Scale plan."
+          },
+          "response": []
+        },
+        {
+          "name": "Search — Year view (16 days, Scale+)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/weather/search?destination=New%20York&period=year&units=imperial",
+              "host": ["{{base_url}}"],
+              "path": ["weather", "search"],
+              "query": [
+                { "key": "destination", "value": "New York" },
+                { "key": "period", "value": "year" },
+                { "key": "units", "value": "imperial" }
+              ]
+            },
+            "description": "Maximum 16-day window. Requires Scale plan."
+          },
+          "response": []
+        },
+        {
+          "name": "Search — Swahili AI summary",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/weather/search?destination=Mombasa&period=week&units=metric&lang=sw&ai=true",
+              "host": ["{{base_url}}"],
+              "path": ["weather", "search"],
+              "query": [
+                { "key": "destination", "value": "Mombasa" },
+                { "key": "period", "value": "week" },
+                { "key": "units", "value": "metric" },
+                { "key": "lang", "value": "sw" },
+                { "key": "ai", "value": "true" }
+              ]
+            },
+            "description": "Fetch weather with AI summary in Swahili."
+          },
+          "response": []
+        },
+        {
+          "name": "Search — Imperial units (US)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/weather/search?destination=Los%20Angeles&period=week&units=imperial",
+              "host": ["{{base_url}}"],
+              "path": ["weather", "search"],
+              "query": [
+                { "key": "destination", "value": "Los Angeles" },
+                { "key": "period", "value": "week" },
+                { "key": "units", "value": "imperial" }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "By Coordinates",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/weather/coordinates?lat=-1.2921&lon=36.8219&units=metric&lang=en&ai=true",
+              "host": ["{{base_url}}"],
+              "path": ["weather", "coordinates"],
+              "query": [
+                { "key": "lat", "value": "-1.2921", "description": "Latitude" },
+                { "key": "lon", "value": "36.8219", "description": "Longitude" },
+                { "key": "units", "value": "metric" },
+                { "key": "lang", "value": "en" },
+                { "key": "ai", "value": "true" }
+              ]
+            },
+            "description": "Fetch weather directly by latitude/longitude (Nairobi, Kenya)."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Validation Errors",
+      "item": [
+        {
+          "name": "Missing destination",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/weather/search?period=week",
+              "host": ["{{base_url}}"],
+              "path": ["weather", "search"],
+              "query": [
+                { "key": "period", "value": "week" }
+              ]
+            },
+            "description": "Expect 400 — destination is required."
+          },
+          "response": []
+        },
+        {
+          "name": "Invalid period value",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/weather/search?destination=London&period=quarterly",
+              "host": ["{{base_url}}"],
+              "path": ["weather", "search"],
+              "query": [
+                { "key": "destination", "value": "London" },
+                { "key": "period", "value": "quarterly" }
+              ]
+            },
+            "description": "Expect 400 — 'quarterly' is not a valid period."
+          },
+          "response": []
+        },
+        {
+          "name": "Invalid lang code (too long)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/weather/search?destination=Berlin&lang=english",
+              "host": ["{{base_url}}"],
+              "path": ["weather", "search"],
+              "query": [
+                { "key": "destination", "value": "Berlin" },
+                { "key": "lang", "value": "english" }
+              ]
+            },
+            "description": "Expect 400 — lang must be a 2-character code."
+          },
+          "response": []
+        },
+        {
+          "name": "Missing coordinates",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/weather/coordinates?lat=-1.2921",
+              "host": ["{{base_url}}"],
+              "path": ["weather", "coordinates"],
+              "query": [
+                { "key": "lat", "value": "-1.2921" }
+              ]
+            },
+            "description": "Expect 400 — lon is required."
+          },
+          "response": []
+        },
+        {
+          "name": "Invalid coordinates (out of range)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/weather/coordinates?lat=999&lon=999",
+              "host": ["{{base_url}}"],
+              "path": ["weather", "coordinates"],
+              "query": [
+                { "key": "lat", "value": "999" },
+                { "key": "lon", "value": "999" }
+              ]
+            },
+            "description": "Expect 400 — latitude/longitude out of valid range."
+          },
+          "response": []
+        },
+        {
+          "name": "Unknown destination",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/weather/search?destination=xyzabc999notaplace",
+              "host": ["{{base_url}}"],
+              "path": ["weather", "search"],
+              "query": [
+                { "key": "destination", "value": "xyzabc999notaplace" }
+              ]
+            },
+            "description": "Expect 400 — geocoding finds no match."
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
