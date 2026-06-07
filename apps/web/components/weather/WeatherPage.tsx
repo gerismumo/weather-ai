@@ -109,10 +109,7 @@ export default function WeatherPage() {
           />
         </div>
       </header>
-
-      {/* Main content */}
       <main className="container max-w-2xl mx-auto px-4 py-5 space-y-5 pb-12">
-        {/* Controls — only show when there's data or we searched */}
         {(uiState === 'success' || (uiState !== 'idle' && lastQuery)) && (
           <ForecastControls
             period={period}
@@ -122,43 +119,29 @@ export default function WeatherPage() {
           />
         )}
 
-        {/* State rendering */}
         {uiState === 'idle' && <WeatherEmpty />}
         {uiState === 'loading' && <WeatherLoading />}
         {uiState === 'error' && <WeatherError message={errorMsg} />}
 
         {uiState === 'success' && data && (
           <>
-            {/* Current conditions */}
             <CurrentWeatherCard
               current={data.current}
               location={data.location}
               destination={data.destination}
               units={units}
             />
-
-            {/* AI summary */}
             {data.summary && <AISummary summary={data.summary} />}
-
-            {/* Hourly highlights */}
             {data.hourly_highlights.length > 0 && (
               <HourlyHighlights hours={data.hourly_highlights} units={units} />
             )}
-
-            {/* Current details from first hourly entry */}
             {data.hourly_highlights[0] && (
               <WeatherDetails hourly={data.hourly_highlights[0]} units={units} />
             )}
-
-            {/* Daily forecast */}
             {data.forecast.length > 0 && (
               <DailyForecast forecast={data.forecast} units={units} />
             )}
-
-            {/* Period stats */}
             <WeatherStats stats={data.stats} units={units} />
-
-            {/* Footer attribution */}
             <p className="text-center text-xs text-muted-foreground pt-2">
               Data refreshed {new Date(data.current.time).toLocaleTimeString()} ·{' '}
               {data.location.timezone}
